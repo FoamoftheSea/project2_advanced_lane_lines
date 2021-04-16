@@ -233,7 +233,7 @@ class Lane_Finder:
 				if h_thresh is None:
 					binary[((l_binary == 1) & (s_binary == 1)) | (sxbinary == 1)] = 1
 				else:
-					binary[((h_binary == 1) & (l_binary == 1) & (s_binary == 1)) | (sxbinary == 1)] = 1
+					binary[((h_binary == 1) & (l_binary == 1) & (s_binary == 1)) & (sxbinary == 1)] = 1
 			return binary
 		
 		
@@ -380,20 +380,29 @@ class Lane_Finder:
 		# Fit a second order polynomial to each using np.polyfit()
 		if not metric:
 
-			self.left_fit = np.polyfit(lefty, leftx, 2)
-			self.right_fit = np.polyfit(righty, rightx, 2)
-			self.recent_fit = True
+			try:
+				self.left_fit = np.polyfit(lefty, leftx, 2)
+				self.right_fit = np.polyfit(righty, rightx, 2)
+				self.recent_fit = True
+			except:
+				self.left_fit = self.left_fit
+				self.right_fit = self.right_fit
+				self.recent_fit = False
 
 		else:
 
-			self.left_fit_metric = np.polyfit(lefty * self.ym_per_pixel,
-											  leftx * self.xm_per_pixel,
-											  2
-											 )
-			self.right_fit_metric = np.polyfit(righty * self.ym_per_pixel,
-											   rightx * self.xm_per_pixel,
-											   2
-											  )
+			try:
+				self.left_fit_metric = np.polyfit(lefty * self.ym_per_pixel,
+												  leftx * self.xm_per_pixel,
+												  2
+												 )
+				self.right_fit_metric = np.polyfit(righty * self.ym_per_pixel,
+												   rightx * self.xm_per_pixel,
+												   2
+												  )
+			except:
+				self.left_fit_metric = self.left_fit_metric
+				self.right_fit_metric = self.right_fit_metric
 
 		# If processing video, add current fit to list, and average curves
 		if self.processing_video:

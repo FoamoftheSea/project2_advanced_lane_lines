@@ -4,12 +4,13 @@ Project 2 for Udacity Self-Driving Car Engineer Nanodegree, which involves findi
 
 Example Output:
 
-
+![Example](output_images/test3.jpg)
 
 ## Contents
 
 - 1_Pipeline_Development.ipynb - the first notebook for the project, which contains all of the workflow involved in developing the components of the pipeline, including calibration, perspective transformation, and polynomial fitting. A class object is drafted to fulfill these pipeline steps, and then tested on the project videos.
 - 2_Pipeline_Refinement.ipynb - the second notebook for the project, where the pipeline class object is refined for better functionality, and attempts are made to expand its abilities to handle the challenge videos.
+- writeup.md - my write up for the project.
 - lane_finder.py - file which contains the code of the refined pipeline.
 - output_images/ - folder containing all of the output images and videos from the pipeline.
 - camera_cal/ - folder containing the calibration files for the camera.

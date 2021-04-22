@@ -20,8 +20,8 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [image1]: ./output_images/undistorted.jpg "Undistorted"
-[image2]: ./output_images/undistored_test_output.jpg "Road Undistorted"
-[image3]: ./examples/binary_combo_example.jpg "Binary Example"
+[image2]: ./output_images/undistorted_test_output.jpg "Road Undistorted"
+[image3]: ./output_images/binary_output.jpg "Binary Example"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
 [image6]: ./examples/example_output.jpg "Output"
@@ -53,13 +53,15 @@ To apply the undistortion to the images, this is the process I followed:
 
 ```python
 # Applying undistortion to a test image:
+# Read in image
 test_img = plt.imread('test_images/test1.jpg')
 # Undistort the image
 undist = cv2.undistort(test_img, mtx, dist, None, mtx)
+# Plot the image
 plt.imshow(undist)
 plt.show()
 # Reverse RGB channels and use cv2.imwrite() to save to output_images folder
-cv2.imwrite('output_images/undistored_test_output.jpg', undist[:, :, ::-1])
+cv2.imwrite('output_images/undistorted_test_output.jpg', undist[:, :, ::-1])
 ```
 
 Which yields the following result:
@@ -68,21 +70,23 @@ Which yields the following result:
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
-I used a combination of color and gradient thresholds to generate a binary image. A walkthrough of the process can be found in the 'Color and Gradient Thresholding' section of the '[1_Pipeline_Development.ipynb](1_Pipeline_Development.ipynb)' notebook. The workflow is also incorporated into the main lane finding class object located in '[lane_finder.py](lane_finder.py)' in the binary_lane_image() function starting on line 165. Here's an example of my output for this step. (note: this is not actually from one of the test images)
+I used a combination of color and gradient thresholds to generate a binary image. A walkthrough of the process can be found in the 'Color and Gradient Thresholding' section of the '[1_Pipeline_Development.ipynb](1_Pipeline_Development.ipynb)' notebook. The workflow is also incorporated into the main lane finding class object located in '[lane_finder.py](lane_finder.py)' in the binary_lane_image() function starting on line 165. Here's an example of my output for this step.
 
 ![alt text][image3]
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
+The walkthrough of my process for perspective transforming the images can be found in the 'Perspective Transformation' section of the '[1_Pipeline_Development.ipynb](1_Pipeline_Development.ipynb)' notebook. This functionality is built into the `process_image()` function of the pipeline class object found in the `lane_finder.py` file. 
+
 The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
 
 ```python
 src = np.array([[200, imheight], [595, 450],
-                [686, 450], [1100, imheight]],
+                [686, 450], [1102, imheight]],
                np.float32)
                
 dst = np.array([[200, imheight], [200, 0],
-                [1110, 0], [1110, imheight]],
+                [1102, 0], [1102, imheight]],
                np.float32)
 ```
 
@@ -92,8 +96,8 @@ This resulted in the following source and destination points (x, y):
 |:-------------:|:-------------:| 
 | 200, 720      | 200, 720      | 
 | 595, 450      | 200, 0        |
-| 686, 450      | , 720      |
-| 1100, 720     | 960, 0        |
+| 686, 450      | 1102, 0       |
+| 1102, 720     | 1102, 720     |
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
@@ -101,7 +105,7 @@ I verified that my perspective transform was working as expected by drawing the 
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+The workflow for identifying lane-line pixels using the sliding window approach, and then fitting polynomial curves to these pixels can be found in the 'Fitting Polynomial Curves' section of the '[1_Pipeline_Development.ipynb](1_Pipeline_Development.ipynb)' notebook. In the full pipeline, the sliding window approach (by default) is only used on the first frame of a video, after which the pipeline searches for lane pixels using the previous polynomial curve fit.
 
 ![alt text][image5]
 

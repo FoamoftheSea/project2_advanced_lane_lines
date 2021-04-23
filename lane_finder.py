@@ -32,7 +32,7 @@ class Lane_Finder:
 				 frame_buffer=5,
 				 margin=100,
 				 padding=200,
-				 lane_length=30.0,
+				 lane_length=49.0,
 				 lane_width=3.7,
 				 nwindows=9,
 				 minpix=50,
@@ -242,7 +242,8 @@ class Lane_Finder:
 		# Take a histogram of the bottom half of the image
 		histogram = np.sum(binary_warped[binary_warped.shape[0]//2:,:], axis=0)
 		# Create an output image to draw on and visualize the result
-		out_img = np.dstack((binary_warped, binary_warped, binary_warped))
+		out_img = np.zeros((*binary_warped.shape, 3), dtype=np.uint8)
+		#out_img = np.dstack((binary_warped, binary_warped, binary_warped))
 		# Find the peak of the left and right halves of the histogram
 		# These will be the starting point for the left and right lines
 		midpoint = np.int(histogram.shape[0]//2)
@@ -340,7 +341,8 @@ class Lane_Finder:
 		righty = nonzeroy[right_lane_inds]
 		
 		# Generate an output image
-		out_img = np.dstack((binary_warped, binary_warped, binary_warped))*255
+		out_img = np.zeros((*binary_warped.shape, 3), np.uint8)
+		#out_img = np.dstack((binary_warped, binary_warped, binary_warped))*255
 		
 		if visualize:
 			## Visualization ##
@@ -500,7 +502,7 @@ class Lane_Finder:
 			self.xm_per_pixel = self.lane_width / (right_fitx[-1] - left_fitx[-1])
 		# Calculate curvature
 		self.fit_polynomial(leftx, lefty, rightx, righty, metric=True)
-		y_eval = np.max(ploty)
+		y_eval = np.max(ploty) * self.ym_per_pixel
 		left_curverad, right_curverad = self.calc_curvature(y_eval)
 		# Get average curve radius
 		curverad = (left_curverad + right_curverad) / 2
@@ -571,6 +573,12 @@ class Lane_Finder:
 			clip = clip.subclip(0, subclip)
 		mod_clip = clip.fl_image(self.process_image)
 		mod_clip.write_videofile(outpath, audio=False)
+
+		# Reset values after completion
 		self.processing_video = False
+		self.right_fits = []
+		self.right_fits_metric = []
+		self.left_fits = []
+		self.left_fits_metric = []
 		
 		pass

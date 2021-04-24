@@ -17,13 +17,6 @@ The goals / steps of this project are the following:
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
-[//]: # (Image References)
-
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image6]: ./examples/example_output.jpg "Output"
-[video1]: ./project_video.mp4 "Video"
-
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
 
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -120,7 +113,7 @@ This is done in lines 439 through 447 in my code in the `lane_finder.py` file in
 
 I implemented this step in lines 513 through 527 in the `lane_finder.py` file in the `process_image()` class method.  Here is an example of my result on a test image:
 
-![Final Output](output_images/test1.jpg)
+![Final Output](output_images/test5.jpg)
 
 ---
 
@@ -136,4 +129,6 @@ Here's a [link to my video result](./output_images/project_video_output.mp4)
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.
+
+

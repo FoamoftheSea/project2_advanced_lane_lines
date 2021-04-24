@@ -26,7 +26,7 @@ class Lane_Finder:
 				 src=None,
 				 dst=None,
 				 h_thresh=None,
-				 l_thresh=None,
+				 l_thresh=(50, 255),
 				 s_thresh=(120, 255), 
 				 sx_thresh=(20, 100),
 				 frame_buffer=5,

@@ -106,12 +106,12 @@ class Lane_Finder:
 		
 		# Load default src and dst points if none provided:
 		if src == None:
-			src = np.array([[200, 720], [595, 450],
-							[686, 450], [1100, 720]],
+			src = np.array([[208, 720], [595, 450],
+							[686, 450], [1102, 720]],
 						   np.float32)
 		if dst == None:
-			dst = np.array([[200 + padding, 720], [200 + padding, 0],
-							[1110 + padding, 0], [1110 + padding, 720]],
+			dst = np.array([[208 + padding, 720], [208 + padding, 0],
+							[1102 + padding, 0], [1102 + padding, 720]],
 						   np.float32)
 	
 		# Set up transformation matrix and inverse transform matrix

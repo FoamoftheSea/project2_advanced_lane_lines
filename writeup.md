@@ -91,9 +91,9 @@ This resulted in the following source and destination points (x, y):
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image. Below, we can see both of the provided "straight_lines" images warped using these `src` and `dst` points, with the lines connecting the destination points drawn on. Notice that the chosen points are a happy medium between the two images, the first of which tapers inward slightly, and the second which tapers outward slightly after the transformation.
 
-![Warped Output 1](output_images/warped_output1.jpg)
+![Warped Output 1](output_images/warp_output1.jpg)
 
-![Warped Output 2](output_images/warped_output2.jpg)
+![Warped Output 2](output_images/warp_output2.jpg)
 
 *NOTE* In the actual pipeline, the destination points are shifted to the right according to a padding value, so that extra space is created on the left side of the resulting image where the left lane can be found in the instance it has pronounced leftward curvature that takes it off the original image plane. The explanation for this process is found in the "Color and Gradient Thresholding" section of the '[1_Pipeline_Development.ipynb](1_Pipeline_Development.ipynb)' notebook.
 
@@ -109,7 +109,15 @@ Below we can see an example output of finding lane pixels with the sliding windo
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-This is done in lines 439 through 447 in my code in the `lane_finder.py` file in the class method `calc_curvature()`. It is done by evaluating the curvature of the second-order polynomial curves fit for both lane lines at the metric equivalent of the pixel value at the bottom of the image. These two curvatures are averaged together to get the curvature of the lane.
+This is done in lines 439 through 447 in my code in the `lane_finder.py` file in the class method `calc_curvature()`. It is done by evaluating the curvature of the second-order polynomial curves fit for both lane lines at the metric equivalent of the pixel value at the bottom of the image, using the formula provided in the curriculum. The curvatures calculated for the left and right lane lines are averaged together to get the curvature of the lane.
+
+Formula of second order polynomial:
+
+![2nd Order Polynomial](output_images/order2poly.png)
+
+Formula for curvature of second order polynomial:
+
+![2nd Order Poly Curvature](output_images/order2curvature.png)
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 

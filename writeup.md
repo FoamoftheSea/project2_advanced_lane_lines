@@ -109,7 +109,11 @@ Below we can see an example output of finding lane pixels with the sliding windo
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-This is done in lines 439 through 447 in my code in the `lane_finder.py` file in the class method `calc_curvature()`. It is done by evaluating the curvature of the second-order polynomial curves fit for both lane lines at the metric equivalent of the pixel value at the bottom of the image, using the formula provided in the curriculum. The curvatures calculated for the left and right lane lines are averaged together to get the curvature of the lane.
+This is done in lines 439 through 447 in my code in the `lane_finder.py` file in the class method `calc_curvature()`. It is done by evaluating the curvature of the second-order polynomial curves fit for both lane lines at the metric equivalent of the pixel value at the bottom of the image, using the formula provided in the curriculum. The curvatures calculated for the left and right lane lines are averaged together to get the curvature of the lane. 
+
+The vehicle's position relative to the center of the lane is calculated by taking the pixel difference between the center of the image and the midpoint between the two polynomial curves, and converting to meters. This assumes that the camera is mounted to the center of the car, as per instruction.
+
+When processing video, the curvatures and lane position are calculated using curves averaged across a set number of frames according to the `frame_buffer` class instance variable (default is 5 frames).
 
 Formula of second order polynomial:
 
